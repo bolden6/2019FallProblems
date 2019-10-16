@@ -41,10 +41,16 @@ int main(int argc, char * * argv)
 
   bool rtv = readInt(argv[1], intArr, numElem);
 
+<<<<<<< HEAD
   if (rtv == false) // read fail
     {
       free(intArr);
       return EXIT_FAILURE;
+=======
+  if (rtv == false) //if read fails, return EXIT_FAILURE
+    { 
+
+>>>>>>> 8720506b64e0d6b009475bfadee1b31f0c9859e1
     }
 
   // call qsort using the comparison function you write

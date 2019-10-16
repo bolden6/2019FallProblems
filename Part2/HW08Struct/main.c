@@ -53,10 +53,13 @@ int main(int argc, char * * argv)
 #endif
 
 
+<<<<<<< HEAD
   // call qsort to sort the vectors, use argv[3] to determine which
   // attribute to sort
   qsort(vecArr, numVec, sizeof(Vector), compareVector);
 
+=======
+>>>>>>> 8720506b64e0d6b009475bfadee1b31f0c9859e1
 
 #ifdef DEBUG
   printf("\n");
