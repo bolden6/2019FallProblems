@@ -2,13 +2,13 @@
 // *** DO NOT modify this file
 // ***
 
-#include <stdio.h>  
-#include <stdlib.h> 
-#include <string.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #define NUMCHAR 256
-bool countChar(char * filename, char * counts, int size);
-void printCounts(char * counts, int size);
+bool countChar(char * filename, int * counts, int size);
+void printCounts(int * counts, int size);
 
 int main(int argc, char * * argv)
 {
@@ -17,7 +17,7 @@ int main(int argc, char * * argv)
     {
       return EXIT_FAILURE;
     }
-  char counts[NUMCHAR] = {0}; // initialize all elements to zero
+  int counts[NUMCHAR] = {0}; // initialize all elements to zero
   bool rtv;
   rtv = countChar(argv[1], counts, NUMCHAR);
   if (rtv == false)
@@ -27,4 +27,3 @@ int main(int argc, char * * argv)
   printCounts(counts, NUMCHAR);
   return EXIT_SUCCESS;
 }
-

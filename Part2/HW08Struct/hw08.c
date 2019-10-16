@@ -1,9 +1,9 @@
 // ***
 // *** You must modify this file
 // ***
-#include <stdio.h>  
-#include <stdlib.h> 
-#include <string.h> 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #include "hw08.h"
 
@@ -13,13 +13,22 @@ int countVector(char * filename)
 {
   // count the number of vectors in the file and return the number
   // The input is a binary file. You must use fread.
-  // You must not use fscanf(, "%d", ) 
-  //
+  FILE * fp = fopen(filename, "r");
+  Vector vp;
+  int count = -1;
   // If fopen fails, return -1
-  //
-  //
-  // For the mode of fopen, you may use "r" without b
-  //
+  if (!fp)
+   {
+    return count;
+   }
+
+   while (!feof(fp))
+   {
+    fread(&vp, sizeof(Vector), 1, fp);
+    count++;
+   }
+  fclose(fp);
+  return count;
 }
 #endif
 
@@ -27,38 +36,71 @@ int countVector(char * filename)
 bool readVector(char* filename, Vector * vecArr, int size)
 {
   // if fopen fails, return false
-  // read Vectors from the file.
-  // 
-  //
-  // if the number of integers is different from size (too
-  // few or too many) return false
-  // 
-  // if everything is fine, fclose and return true
+  FILE * fp = fopen(filename, "r");
+  int count = 0;
+  //int value;
 
+  if(!fp)
+  {
+    return false;
+  }
+  // read Vectors from the file.
+  count = fread(vecArr, sizeof(Vector), size, fp);
+
+    // if the number of integers is different from size (too
+    // few or too many) return false
+  if(count != size)
+  {
+    return false;
+  }
+
+  // if everything is fine, fclose and return true
+  fclose(fp);
+  return true;
 }
 #endif
 
 #ifdef TEST_COMPAREVECTOR
 int compareVector(const void *p1, const void *p2)
 {
-  // compare the x attribute first
-  // If the first vector's x is less than the second vector's x
-  // return -1
-  // If the first vector's x is greater than the second vector's x
-  // return 1
-  // If the two vectors' x is the same, compare the y attribute
-  //
-  // If the first vector's y is less than the second vector's y
-  // return -1
-  // If the first vector's y is greater than the second vector's y
-  // return 1
-  // If the two vectors' y is the same, compare the z attribute
-  //
-  // If the first vector's z is less than the second vector's z
-  // return -1
-  // If the first vector's z is greater than the second vector's z
-  // return 1
-  // If the two vectors' x, y, z are the same (pairwise), return 0
+  const Vector * vp1 = (const Vector *)p1;
+  const Vector * vp2 = (const Vector *)p2;
+  const Vector a = * vp1;
+  const Vector b = * vp2;
+
+  if (a.x < b.x)
+   {
+    return -1;
+   }
+   if (a.x > b.x)
+   {
+    return 1;
+   }
+   else if (a.x == b.x)
+   {
+     if (a.y < b.y)
+     {
+       return -1;
+     }
+     if (a.y > b.y)
+     {
+       return 1;
+     }
+      else if (a.y == b.y)
+     {
+       if (a.z < b.z)
+       {
+         return -1;
+       }
+       if (a.z > b.z)
+       {
+         return 1;
+       }
+     }
+  }
+
+  return 0;
+
 }
 #endif
 
@@ -66,11 +108,24 @@ int compareVector(const void *p1, const void *p2)
 bool writeVector(char* filename, Vector * vecArr, int size)
 {
   // if fopen fails, return false
+  FILE * fp = fopen(filename, "w");
+  if (!fp)
+  {
+    return false;
+  }
+
   // write the array to file using fwrite
-  // need to check how many have been written
-  // if not all are written, fclose and return false
-  // 
+  int numWrit; //rtv for fwrite- # written
+  numWrit = fwrite(vecArr, sizeof(Vector), size, fp);
+    // if not all are written, fclose and return false
+  if (numWrit < size)
+  {
+    fclose(fp);
+    return EXIT_FAILURE;
+  }
   // fclose and return true
+  fclose(fp);
+  return true;
 }
 #endif
 

@@ -1,11 +1,7 @@
-// ***
-// *** You MUST modify this file
-// ***
-
 #include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h> 
-#include <string.h> 
+#include <stdlib.h>
+#include <string.h>
 
 #ifdef TEST_ELIMINATE
 // 100% of the score
@@ -20,24 +16,34 @@ void eliminate(int n, int k)
       fprintf(stderr, "malloc fail\n");
       return;
     }
-  // initialize all elements
 
+  for (int i = 0; i < n; i++)
+  {
+     arr[i] = true;
+  }
+  //local decs
+  int eliminated = 0; // num of elements eliminated
+  int position = 0; // current position in the array
 
-  
-  // counting to k,
-  // mark the eliminated element
-  // print the index of the marked element
-  // repeat until only one element is unmarked
+  while (eliminated < n)
+   {
+      int count = 0; // counter 1 at a time to the next k
+      while (count < k)
+      {
+        if (arr[position])
+        {
+         count++;
+        }
+        if (count == k)
+         {
+           (arr[position]) = false;// eliminate arr[index] for recounts
+            printf("%d\n", position); // prints the current index
+            eliminated++;
+         }
+      position = (position + 1) % n;// advance to the next position
+    }
+  }
 
-
-
-
-  // print the last one
-
-
-
-
-  // release the memory of the array
   free (arr);
 }
 #endif
